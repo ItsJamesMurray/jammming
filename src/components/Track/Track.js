@@ -19,9 +19,9 @@ class Track extends React.Component{
 
   renderAction(){
     if(this.props.onAdd){
-      return <a onClick = {this.addTrack()}>+</a>
+      return <a onClick = {this.addTrack}>+</a>
     } else {
-      return <a onClick = {this.removeTrack()}>-</a>
+      return <a onClick = {this.removeTrack}>-</a>
     }
   }
   render(){

@@ -50,17 +50,16 @@ const Spotify = {
     if(!nameOfPlaylist || !arrayOfTrackURIs.length){
       return;
     }
-    let userID ;
+    let userID;
     let userURL = 'https://api.spotify.com/v1/me';
     let playlistID;
     const accessToken = Spotify.getAccessToken();
-    const authorization = {headers: {Authorization: `Bearer ${accessToken}`}};
+    const authorization = {Authorization: `Bearer ${accessToken}`};
 
-
-    fetch(userURL,{
+    return fetch(userURL,{
       headers: authorization
     }).then(response => {
-      response.json();
+      return response.json();
     }).then(jsonResponse => {
       userID = jsonResponse.id;
       return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`,{
@@ -70,14 +69,14 @@ const Spotify = {
                   name: nameOfPlaylist
               })
       }).then(response => {
-        response.json();
+        return response.json();
       }).then(jsonResponse => {
         playlistID = jsonResponse.id;
-        return fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`,{
-          method: 'POST',
-          headers: authorization,
-          body: JSON.stringify({
-            uris: arrayOfTrackURIs
+        fetch(`https://api.spotify.com/v1/users/${userID}/playlists/${playlistID}/tracks`,{
+              method: 'POST',
+              headers: authorization,
+              body: JSON.stringify({
+                uris: arrayOfTrackURIs
           })
         });
       });
